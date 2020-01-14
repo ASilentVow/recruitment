@@ -1,21 +1,15 @@
-import React from 'react';
-import { Link } from "react-router-dom";
-import Router from "./router/router";
+import React from "react";
+import Layout from "./views/layout/layout";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <ul>
-        <li>
-          <Link to='/'>layout</Link>
-        </li>
-        <li>
-          <Link to='/page'>page</Link>
-        </li>
-      </ul>
-      <Router></Router>
+    <div className='App'>
+      <Router>
+        <Switch>
+          <Route path='/' component={Layout} />
+        </Switch>
+      </Router>
     </div>
   );
 }
-
-export default App;
