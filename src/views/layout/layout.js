@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { Input, Button } from 'antd';
+import { Button } from 'antd';
 import Home from "../home/home";
 import logo from "../../statics/images/logo.png"
+import NavSearch from "../../components/NavSearch";
 import './layout.scss';
-
-const { Search } = Input;
 
 // logo模块
 function NavLogo() {
@@ -16,14 +15,6 @@ function NavLogo() {
     )
 }
 
-// 搜索模块
-function NavSearch() {
-    return (
-        <div className="nav-search">
-            <Search placeholder="搜索职位、公司" size="large" enterButton="搜索" />
-        </div>
-    )
-}
 
 // 用户操作模块
 function NavUser() {
@@ -120,12 +111,14 @@ export default class Layout extends Component{
     return (
       <div>
           <NavBar navShow={navShow} onClick={(name) => this.switchRoute(name)} />
-          <Switch>
+          <div className="content">
+            <Switch>
               <Route exact path='/home' component={Home} />
               <Route exact path='/position' component={Home} />
               <Route exact path='/company' component={Home} />
               <Redirect from="/" to="/home" />
-          </Switch>
+            </Switch>
+          </div>
       </div>
     )
   }
