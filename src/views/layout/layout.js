@@ -4,12 +4,12 @@ import { Button } from 'antd';
 import Home from "../home/home";
 import logo from "../../statics/images/logo.png"
 import NavSearch from "../../components/NavSearch";
-import './layout.scss';
+import LayoutStyle from "./layout.module.scss";
 
 // logo模块
 function NavLogo() {
     return (
-        <div className="nav-logo">
+        <div className={LayoutStyle.navLogo}>
             <img src={logo} alt=""/>
         </div>
     )
@@ -19,7 +19,7 @@ function NavLogo() {
 // 用户操作模块
 function NavUser() {
     return (
-        <div className="nav-user">
+        <div className={LayoutStyle.navUser}>
           <Button type="link" ghost size="small">我要找工作</Button>
           <Button type="link" ghost size="small">我要招聘</Button>
           <Button ghost size="small">注册</Button>
@@ -44,14 +44,14 @@ function NavTabs(props) {
   ]
   const listItem = navItem.map(v => {
     return (
-        <li onClick={() => props.onClick(v.key)} className="nav-item" key={v.key}>
+        <li onClick={() => props.onClick(v.key)} className={LayoutStyle.navItem} key={v.key}>
           <span>{v.label}</span>
         </li>
     )
   })
   return (
-      <div className="nav-tabs">
-        <ul className="item-wrapper">
+      <div className={LayoutStyle.navTabs}>
+        <ul className={LayoutStyle.itemWrapper}>
           {listItem}
         </ul>
       </div>
@@ -64,9 +64,9 @@ function NavBar(props) {
   if (navShow) {
     return (
         // 浮动导航
-        <div className="fixed-nav-bar">
-          <div className="nav-wrapper">
-            <div className="nav-content">
+        <div className={LayoutStyle.fixedNavBar}>
+          <div className={LayoutStyle.navWrapper}>
+            <div className={LayoutStyle.navContent}>
               {/* logo */}
               <NavLogo />
               {/* 搜索栏 */}
@@ -78,9 +78,9 @@ function NavBar(props) {
   }
   return (
       // 固定导航
-      <div className="nav-bar">
-        <div className="nav-wrapper">
-          <div className="nav-content">
+      <div className={LayoutStyle.navBar}>
+        <div className={LayoutStyle.navWrapper}>
+          <div className={LayoutStyle.navContent}>
             <NavLogo />
             {/* 标签栏 */}
             <NavTabs onClick={(name) => props.onClick(name)} />

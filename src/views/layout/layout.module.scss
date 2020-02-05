@@ -38,22 +38,24 @@ body {
   background-color: #f6f6f8;
 }
 
+
 /*---------普通导航栏-----------*/
-.nav-bar{
+.navBar{
   height: 50px;
   background-color: #202329;
-  .nav-content {
+  .navContent {
     height: 100%;
     display: flex;
   }
   /*-----------标签页------------*/
-  .nav-tabs {
+  .navTabs {
+    font-size: 14px;
     margin: 0 30px;
-    .item-wrapper {
+    .itemWrapper {
       line-height: 50px;
       display: flex;
       color: #fff;
-      .nav-item {
+      .navItem {
         padding: 0 15px;
         text-align: center;
         span {
@@ -67,7 +69,7 @@ body {
     }
   }
   /*----------用户操作---------------*/
-  .nav-user {
+  .navUser {
     flex: 2;
     width: 350px;
     display: flex;
@@ -80,15 +82,15 @@ body {
 }
 
 /*-------头部固定导航栏------*/
-.fixed-nav-bar {
+.fixedNavBar {
   width: 100%;
   box-shadow: 0 3px 5px 0 #d8dae3;
-  .nav-content {
+  .navContent {
     display: flex;
     align-items: center;
     justify-content: space-around;
     height: 90px;
-    .nav-search {
+    .navSearch {
       width: 800px;
       display: flex;
     }
@@ -96,7 +98,7 @@ body {
 }
 
 /*----------导航内容外围样式----------*/
-.nav-wrapper {
+.navWrapper {
   max-width: 1300px;
   min-width: 900px;
   height: 100%;
@@ -104,7 +106,7 @@ body {
 }
 
 /*----------logo样式----------*/
-.nav-logo {
+.navLogo {
   height: 100%;
   img {
     height: 100%;
