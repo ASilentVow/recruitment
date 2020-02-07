@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { Button } from 'antd';
 import Home from "../home/home";
 import logo from "../../statics/images/logo.png"
-import NavSearch from "../../components/NavSearch";
+import NavSearch from "../../components/NavSearch/NavSearch";
 import LayoutStyle from "./layout.module.scss";
 
 // logo模块

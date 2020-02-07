@@ -6,6 +6,46 @@
     margin: 0 auto;
     .homeSearch {
       padding: 0 200px;
+      .navSearch {
+        box-shadow: 0 0 6px 0 rgba(0,0,0,.13);
+      }
+      .hotPosition {
+        padding: 10px 0 0 5px;
+        & > * {
+          font-size: 13px;
+        }
+        .posItem {
+          cursor: pointer;
+          color: #21a9ff;
+          padding: 0 15px;
+        }
+      }
+    }
+    .section {
+      padding: 40px 10px;
+      .title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      .hot {
+        .hotCard {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          .cardItem {
+            width: 410px;
+            height: 130px;
+            background-color: #fff;
+            margin-bottom: 20px;
+          }
+        }
+        .hotBtn {
+          width: 410px;
+          margin: 0 auto;
+        }
+      }
     }
   }
 }
