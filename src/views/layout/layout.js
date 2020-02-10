@@ -10,7 +10,7 @@ import LayoutStyle from "./layout.module.scss";
 function NavLogo() {
     return (
         <div className={LayoutStyle.navLogo}>
-            <img src={logo} alt=""/>
+            <img src={logo} alt="" />
         </div>
     )
 }
@@ -113,9 +113,9 @@ export default class Layout extends Component{
           <NavBar navShow={navShow} onClick={(name) => this.switchRoute(name)} />
           <div className="content">
             <Switch>
-              <Route exact path='/home' component={Home} />
-              <Route exact path='/position' component={Home} />
-              <Route exact path='/company' component={Home} />
+              <Route exact path="/home" component={Home} />
+              <Route exact path="/position" component={Home} />
+              <Route exact path="/company" component={Home} />
               <Redirect from="/" to="/home" />
             </Switch>
           </div>

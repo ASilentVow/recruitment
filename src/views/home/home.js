@@ -52,7 +52,7 @@ function Hot() {
   const paneList = inviteList.map((v, i) => <TabPane tab={v.label} key={i} />)
   const cardList = [0,1,2,3,4,5,6,7,8].map((v, i) => {
     return (
-        <div className={homeStyle.cardItem} key={i}></div>
+        <div className={homeStyle.cardItem} key={i} />
     )
   })
 
@@ -76,7 +76,7 @@ function Section(props) {
   return (
       <div className={homeStyle.section}>
         <div className={homeStyle.title}>{props.title}</div>
-        <Hot/>
+        <Hot />
       </div>
   )
 }
@@ -92,8 +92,8 @@ export default class Home extends Component{
             {/* 热门职位搜索 */}
             <HotPosition />
           </div>
-          <Section title="热招职位"/>
-          <Section title="热门企业"/>
+          <Section title="热招职位" />
+          <Section title="热门企业" />
         </div>
       </div>
     )

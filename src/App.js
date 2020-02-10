@@ -4,10 +4,10 @@ import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 export default function App() {
   return (
-    <div className='App'>
+    <div className="App">
       <Router>
         <Switch>
-          <Route path='/' component={Layout} />
+          <Route path="/" component={Layout} />
         </Switch>
       </Router>
     </div>
