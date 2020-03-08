@@ -43,7 +43,7 @@ function Filter() {
 
   return (
       <div className={NavSearchStyle.filterPosition}>
-        <Cascader className={NavSearchStyle.positionCascader} options={options} placeholder="职位类型"/>
+        <Cascader className={NavSearchStyle.positionCascader} options={options} placeholder="职位类型" />
       </div>
   )
 }
@@ -53,7 +53,7 @@ export default class NavSearch extends Component{
   render() {
     return (
         <div className={`${LayoutStyle.navSearch} ${homeStyle.navSearch}`}>
-          <Search addonBefore={<Filter/>} placeholder="搜索职位、公司" size="large" enterButton="搜索" />
+          <Search addonBefore={<Filter />} placeholder="搜索职位、公司" size="large" enterButton="搜索" />
         </div>
     )
   }

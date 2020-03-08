@@ -1,0 +1,86 @@
+.company {
+  .companyFilter {
+    width: 100%;
+    height: 250px;
+    background-color: #fff;
+    .filterWrapper {
+      max-width: 1300px;
+      min-width: 900px;
+      margin: 0 auto;
+      padding: 20px 10px;
+      .filterItem {
+        line-height: 20px;
+        color: #61687c;
+        padding: 10px 0;
+        display: flex;
+        .itemLabel {
+          margin-right: 10px;
+          font-size: 14px;
+          font-weight: 600;
+        }
+        .itemTabList {
+          font-size: 13px;
+          .itemTab {
+            margin: 0 20px;
+            cursor: pointer;
+            &:hover{
+              color: #21a9ff;
+            }
+          }
+        }
+      }
+    }
+  }
+  .content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 80px 0 50px;
+    max-width: 1300px;
+    min-width: 900px;
+    margin: 0 auto;
+    .cardWrapper {
+      cursor: pointer;
+      margin-bottom: 30px;
+      width: 300px;
+      height: 140px;
+      background-color: #fff;
+      &:hover {
+        box-shadow: 5px 5px 20px rgba(0,0,0,.05);
+      }
+      .companyInfo {
+        border-bottom: 1px dotted #e0e0e0;
+        justify-content: space-between;
+        display: flex;
+        padding: 20px;
+        .logo {
+          width: 60px;
+          height: 60px;
+          border: 1px solid #e0e0e0;
+          border-radius: 5px;
+        }
+        .companyText {
+          text-align: right;
+          p {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #898e9d;
+          }
+        }
+        .vLine {
+          display: inline-block;
+          width: 1px;
+          height: 12px;
+          vertical-align: middle;
+          background: #e0e0e0;
+          margin: 0 10px;
+        }
+      }
+      .aboutInfo {
+        font-size: 10px;
+        padding: 10px 20px;
+        color: #898e9d;
+      }
+    }
+  }
+}

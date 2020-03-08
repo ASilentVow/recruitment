@@ -58,6 +58,9 @@ body {
       .navItem {
         padding: 0 15px;
         text-align: center;
+        .active {
+          color: #21a9ff;
+        }
         span {
           cursor: pointer;
           transition: all linear .2s;
@@ -84,6 +87,11 @@ body {
 /*-------头部固定导航栏------*/
 .fixedNavBar {
   width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: #fff;
   box-shadow: 0 3px 5px 0 #d8dae3;
   .navContent {
     display: flex;

@@ -1,8 +1,40 @@
 import React, { Component } from "react";
 import NavSearch from "../../components/NavSearch/NavSearch";
 import homeStyle from "./home.module.scss"
-import { Tabs, Button } from "antd";
-const { TabPane } = Tabs;
+import LayoutStyle from "../layout/layout.module.scss";
+import { throttle } from "../../tools";
+import logo from "../../statics/images/logo.png";
+import HotSection from "./cmps/HotSection";
+
+// logo模块
+function NavLogo() {
+  return (
+    <div className={LayoutStyle.navLogo}>
+      <img src={logo} alt="" />
+    </div>
+  )
+}
+
+// 搜索栏
+function SearchBar(props) {
+  const navShow = props.navShow
+  if (navShow) {
+    return (
+      // 浮动导航
+      <div className={LayoutStyle.fixedNavBar}>
+        <div className={LayoutStyle.navWrapper}>
+          <div className={LayoutStyle.navContent}>
+            {/* logo */}
+            <NavLogo />
+            {/* 搜索栏 */}
+            <NavSearch />
+          </div>
+        </div>
+      </div>
+    )
+  }
+  return null
+}
 
 // 热门职位
 function HotPosition() {
@@ -26,65 +58,45 @@ function HotPosition() {
   )
 }
 
-// 热招
-function Hot() {
-  const inviteList = [
-    {
-      label: 'IT·互联网'
-    }, {
-      label: '金融'
-    }, {
-      label: '房地产·建筑'
-    }, {
-      label: '教育培训'
-    }, {
-      label: '娱乐传媒'
-    }, {
-      label: '医疗健康'
-    }, {
-      label: '法律咨询'
-    }, {
-      label: '供应链·物流'
-    }, {
-      label: '采购贸易'
-    }
-  ]
-  const paneList = inviteList.map((v, i) => <TabPane tab={v.label} key={i} />)
-  const cardList = [0,1,2,3,4,5,6,7,8].map((v, i) => {
-    return (
-        <div className={homeStyle.cardItem} key={i} />
-    )
-  })
-
-  return (
-      <div className={homeStyle.hot}>
-        <Tabs tabBarGutter={60} tabBarStyle={{backgroundColor: '#fff', padding: '10px 0 0 0'}}>
-          {paneList}
-        </Tabs>
-        <div className={homeStyle.hotCard}>
-          {cardList}
-        </div>
-        <div className={homeStyle.hotBtn}>
-          <Button block type="primary" ghost>查看更多</Button>
-        </div>
-      </div>
-  )
-}
-
 // 热门区域
 function Section(props) {
   return (
       <div className={homeStyle.section}>
         <div className={homeStyle.title}>{props.title}</div>
-        <Hot />
+        <HotSection type={props.type} />
       </div>
   )
 }
 
 export default class Home extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      navShow: false
+    };
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', throttle(this.pageScroll.bind(this), 100))
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', throttle(this.pageScroll.bind(this), 100))
+  }
+
+  // 监听页面滚动
+  pageScroll() {
+    const top = document.documentElement.scrollTop
+    this.setState({
+      navShow: top > 174
+    })
+  }
+
   render() {
+    const navShow = this.state.navShow
     return (
       <div className={homeStyle.home}>
+        <SearchBar navShow={navShow} onClick={(name) => this.switchRoute(name)} />
         <div className={homeStyle.homeWrapper}>
           <div className={homeStyle.homeSearch}>
             {/* 首页搜索 */}
@@ -92,8 +104,8 @@ export default class Home extends Component{
             {/* 热门职位搜索 */}
             <HotPosition />
           </div>
-          <Section title="热招职位" />
-          <Section title="热门企业" />
+          <Section title="热招职位" type="1" />
+          <Section title="热门企业" type="2" />
         </div>
       </div>
     )
