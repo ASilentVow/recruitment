@@ -1,117 +1,95 @@
 import React, { Component } from "react";
 import positionStyle from './position.module.scss'
-import NavSearch from "../../components/NavSearch/NavSearch";
-
-// 顶部筛选栏
-function PositionFilter() {
-  return (
-    <div className={positionStyle.positionFilter}>
-      <div className={positionStyle.filterWrapper}>
-        <div className={positionStyle.search}>
-          <NavSearch />
-        </div>
-        <div className={positionStyle.city}>
-          <span className={positionStyle.greyText}>广州</span>
-          <span className={positionStyle.greyText}>></span>
-          <div className={positionStyle.cityList}>
-            <span>热门城市：</span>
-            <span>北京</span>
-            <span>上海</span>
-            <span>广州</span>
-            <span>深圳</span>
-            <span>杭州</span>
-            <span>天津</span>
-            <span>西安</span>
-            <span>苏州</span>
-            <span>武汉</span>
-            <span>厦门</span>
-            <span>长沙</span>
-            <span>成都</span>
-            <span>郑州</span>
-            <span>重庆</span>
-          </div>
-          <span className={positionStyle.allCity}>全部城市</span>
-        </div>
-        <div className={positionStyle.zone}>
-          <div className={positionStyle.zoneList}>
-            <span>天河区</span>
-            <span>白云区</span>
-            <span>番禺区</span>
-            <span>海珠区</span>
-            <span>越秀区</span>
-            <span>黄埔区</span>
-            <span>荔湾区</span>
-            <span>花都区</span>
-            <span>增城区</span>
-            <span>南沙区</span>
-            <span>从化区</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
+import { Filter } from '@/components/Filter/Filter'
+import { getAllPositionListApi } from "@/api/positionApi";
+import { Pagination } from 'antd';
 
 // 职位详情
-function PositionCard() {
+function PositionCard(props) {
   return (
     <div className={positionStyle.cardWrapper}>
       <div className={positionStyle.positionInfo}>
         <div>
-          <div className={positionStyle.name}>算法封装工程师</div>
+          <div className={positionStyle.name}>{props.item.jobName}</div>
           <div>
-            <span className={positionStyle.money}>18-35K·15薪</span>
+            <span className={positionStyle.money}>{props.item.jobSalary}</span>
             <span className={positionStyle.experience}>
-              3-5年
+              {props.item.jobExperience}
               <span className={positionStyle.vLine} />
-              本科
+              {props.item.education}
             </span>
             <span className={positionStyle.commitPerson}>
-              廖先生
-              <span className={positionStyle.vLine} />
-              人力资源主管
+              {props.item.announcer}
             </span>
             <span className={positionStyle.commitBtn}>立即沟通</span>
           </div>
         </div>
         <div>
-          <div className={positionStyle.name}>碧桂园房地产有限公司</div>
+          <div className={positionStyle.name}>{props.item.companyName}</div>
           <div className={positionStyle.experience}>
-            房地产开发
+            {props.item.type}
             <span className={positionStyle.vLine} />
-            已上市
+            {props.item.situation}
             <span className={positionStyle.vLine} />
-            10000人以上
+            {props.item.peopleNum}
           </div>
         </div>
       </div>
       <div className={positionStyle.tag}>
-        <div className={positionStyle.tagList}>
-          <span>深度学习算法</span>
-          <span>视觉图像算法</span>
-          <span>语音算法</span>
-        </div>
-        <div className={positionStyle.desc}>
-          年终奖，定期体检，免费班车，五险一金，员工旅游
-        </div>
+        {props.item.slogan}
       </div>
     </div>
   )
 }
 
 export default class Position extends Component {
+  constructor() {
+    super();
+    this.state = {
+      activeCity: '广州',
+      list: [],
+      count: 0,
+      pageNo: 1
+    }
+  }
+
+  async componentDidMount() {
+    await this.getList()
+  }
+
+  componentWillUnmount() {
+    this.flag = false
+  }
+
+  flag = true
+
+  getList = async () => {
+    const { data, count } = await getAllPositionListApi({
+      city: this.state.activeCity,
+      pageNum: this.state.pageNo
+    })
+    if (this.flag) this.setState({ list: data, count: count })
+  }
+
+  clickFilter = async (label) => {
+    if (this.flag) await this.setState({ activeCity: label })
+    await this.getList()
+  }
+
+  pageChange = async (page, pageSize) => {
+    await this.setState({ pageNo: page })
+    if (this.flag) await this.getList()
+  }
+
   render() {
     return (
       <div className={positionStyle.position}>
-        <PositionFilter />
+        <Filter active={this.state.activeCity} clickItem={this.clickFilter} />
         <div className={positionStyle.content}>
-          <PositionCard />
-          <PositionCard />
-          <PositionCard />
-          <PositionCard />
-          <PositionCard />
-          <PositionCard />
-          <PositionCard />
+          {this.state.list.map(v => <PositionCard key={v.id} item={v} />)}
+          <div style={{ width: '1000px', textAlign: 'center' }}>
+            <Pagination onChange={this.pageChange} current={this.state.pageNo} total={this.state.count} />
+          </div>
         </div>
       </div>
     )

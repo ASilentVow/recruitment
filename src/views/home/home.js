@@ -63,7 +63,7 @@ function Section(props) {
   return (
       <div className={homeStyle.section}>
         <div className={homeStyle.title}>{props.title}</div>
-        <HotSection type={props.type} />
+        <HotSection history={props.history} type={props.type} />
       </div>
   )
 }
@@ -81,11 +81,15 @@ export default class Home extends Component{
   }
 
   componentWillUnmount() {
+    this.flag = false
     window.removeEventListener('scroll', throttle(this.pageScroll.bind(this), 100))
   }
 
+  flag = true
+
   // 监听页面滚动
   pageScroll() {
+    if(!this.flag) return
     const top = document.documentElement.scrollTop
     this.setState({
       navShow: top > 174
@@ -104,8 +108,8 @@ export default class Home extends Component{
             {/* 热门职位搜索 */}
             <HotPosition />
           </div>
-          <Section title="热招职位" type="1" />
-          <Section title="热门企业" type="2" />
+          <Section history={this.props.history} title="热招职位" type="1" />
+          <Section history={this.props.history} title="热门企业" type="2" />
         </div>
       </div>
     )

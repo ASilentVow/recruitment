@@ -31,9 +31,7 @@
       }
       .hot {
         .hotCard {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
+          height: 510px;
           .vLine {
             display: inline-block;
             width: 1px;
@@ -71,7 +69,6 @@
               .positionDetail {
                 color: #898e9d;
                 font-size: 10px;
-                margin-left: 20px;
               }
             }
             &:hover {
@@ -96,10 +93,15 @@
               .logo {
                 width: 60px;
                 height: 60px;
-                border: 1px solid #e0e0e0;
-                border-radius: 5px;
+                img {
+                  height: 100%;
+                  width: 100%;
+                }
               }
               .companyText {
+                overflow: hidden;
+                text-overflow:ellipsis;
+                white-space: nowrap;
                 text-align: right;
                 p {
                   margin-top: 10px;
@@ -117,6 +119,9 @@
               }
             }
             .aboutInfo {
+              overflow: hidden;
+              text-overflow:ellipsis;
+              white-space: nowrap;
               font-size: 10px;
               padding: 10px 20px;
               color: #898e9d;

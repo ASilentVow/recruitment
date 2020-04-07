@@ -100,7 +100,9 @@ export default class Layout extends Component{
 
   // 路由切换
   switchRoute = (routeName) => {
-    this.props.history.push(`/${routeName}`)
+    const pathname = `/${routeName}`
+    if (this.props.history.location.pathname === pathname) return
+    this.props.history.push(pathname)
   }
 
   render() {

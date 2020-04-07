@@ -1,0 +1,43 @@
+.positionFilter {
+  width: 100%;
+  height: 120px;
+  background-color: #fff;
+  box-shadow: 0 3px 6px rgba(6,0,1,.05);
+  .filterWrapper {
+    max-width: 1300px;
+    min-width: 900px;
+    margin: 0 auto;
+    padding: 20px 10px;
+    .search {
+      width: 900px;
+    }
+    .city {
+      display: flex;
+      margin-top: 10px;
+      font-size: 12px;
+      height: 50px;
+      line-height: 60px;
+      .cityList {
+        flex: 2;
+        margin: 0 20px;
+        span {
+          margin: 0 10px;
+          cursor: pointer;
+          &:nth-child(1) {
+            cursor: text;
+          }
+        }
+        .cityItem:hover {
+          color: #21a9ff;
+        }
+      }
+    }
+  }
+}
+.active {
+  color: #21a9ff;
+}
+.greyText {
+  margin: 0 10px;
+  color: #caccd1;
+}
