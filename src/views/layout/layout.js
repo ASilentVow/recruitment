@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { Button } from 'antd';
+import { Button, Modal } from 'antd';
 import Home from "../home/home";
 import Position from "../position/position";
 import Company from "../company/company";
 import logo from "../../statics/images/logo.png"
 import LayoutStyle from "./layout.module.scss";
+import { LoginForm } from './cmps/LoginForm'
+import { RegistryForm } from './cmps/RegistryForm'
 
 // logo模块
 function NavLogo() {
@@ -18,15 +20,58 @@ function NavLogo() {
 
 
 // 用户操作模块
-function NavUser() {
+class NavUser extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+      title: ''
+    }
+  }
+
+  form = null
+
+  openDialog = (title) => {
+    this.setState({
+      visible: true,
+      title: title
+    })
+  }
+
+  handleCancel = () => {
+    this.setState({
+      visible: false
+    })
+  }
+
+  handleSubmit = async e => {
+    const { form } = this.form.props
+    e.preventDefault();
+    const res = await form.validateFields()
+    console.log(res, 'aaa')
+  }
+
+  render() {
     return (
-        <div className={LayoutStyle.navUser}>
-          <Button type="link" ghost size="small">我要找工作</Button>
-          <Button type="link" ghost size="small">我要招聘</Button>
-          <Button ghost size="small">注册</Button>
-          <Button ghost size="small">登录</Button>
-        </div>
+      <div className={LayoutStyle.navUser}>
+        <Button type="link" ghost size="small">我要找工作</Button>
+        <Button type="link" ghost size="small">我要招聘</Button>
+        <Button ghost size="small" onClick={() => {this.openDialog('注册')}}>注册</Button>
+        <Button ghost size="small" onClick={() => {this.openDialog('登录')}}>登录</Button>
+        <Modal
+          title={this.state.title}
+          visible={this.state.visible}
+          onCancel={this.handleCancel}
+          onOk={this.handleSubmit}
+        >
+          {
+            this.state.title === '登录' ? <LoginForm wrappedComponentRef={(form) => this.form = form} />
+              : <RegistryForm wrappedComponentRef={(form) => this.form = form} />
+          }
+        </Modal>
+      </div>
     )
+  }
 }
 
 // 选项卡模块
@@ -108,18 +153,18 @@ export default class Layout extends Component{
   render() {
     return (
       <div>
-          <NavBar
-            activeName={this.state.activeName}
-            onClick={(name) => this.switchRoute(name)}
-          />
-          <div className="content">
-            <Switch>
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/position" component={Position} />
-              <Route exact path="/company" component={Company} />
-              <Redirect from="/" to="/home" />
-            </Switch>
-          </div>
+        <NavBar
+          activeName={this.state.activeName}
+          onClick={(name) => this.switchRoute(name)}
+        />
+        <div className="content">
+          <Switch>
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/position" component={Position} />
+            <Route exact path="/company" component={Company} />
+            <Redirect from="/" to="/home" />
+          </Switch>
+        </div>
       </div>
     )
   }
