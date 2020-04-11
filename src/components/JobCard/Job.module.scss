@@ -1,0 +1,43 @@
+.cardItem {
+  font-size: 14px;
+  cursor: pointer;
+  width: 410px;
+  height: 130px;
+  background-color: #fff;
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s;
+  .hotPositionInfo {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px dashed #e0e0e0;
+    p {
+      padding-top: 5px;
+      font-size: 10px;
+    }
+    .positionMoney {
+      color: #fd9d38;
+    }
+  }
+  .positionAbout {
+    line-height: 20px;
+    padding: 10px 20px;
+    display: flex;
+    .positionDetail {
+      color: #898e9d;
+      font-size: 10px;
+    }
+  }
+  &:hover {
+    box-shadow: 5px 5px 20px rgba(0,0,0,.05);
+  }
+}
+
+.vLine {
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  vertical-align: middle;
+  background: #e0e0e0;
+  margin: 0 10px;
+}

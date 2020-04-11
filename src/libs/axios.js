@@ -7,13 +7,15 @@
  */
 
 import axios from 'axios'
+import { message } from 'antd'
 
 /**
  * axios 请求的baseUrl
  * @type {string}
  */
 const baseUrl = '/api'
-const ERR_OK = 200
+const RES_OK = '200'
+const RES_ERR = '400'
 const TIMEOUT = 10000
 
 const ApiRequest = axios.create({
@@ -54,9 +56,19 @@ ApiRequest.interceptors.response.use(
      */
     const { data } = res
     // 和服务端约定的 Code
-    const { status } = res
-    if (status === ERR_OK) {
+    const { code, msg } = data
+    message.destroy()
+    if (!code) {
+      if (msg) message.success({ content: msg, duration: 1 })
       return Promise.resolve(data)
+    } else {
+      if (code === RES_OK) {
+        if (msg) message.success({ content: msg, duration: 1 })
+        return Promise.resolve(data)
+      } else if (code === RES_ERR) {
+        if (msg) message.error({ content: msg, duration: 1 })
+        return Promise.reject(msg)
+      }
     }
   },
   error => {

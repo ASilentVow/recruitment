@@ -1,9 +1,8 @@
 import { combineReducers } from 'redux'
-import { getPositionList, getCompanyList } from './homeReducer'
+import { userInfo } from "@/store/reducers/userReducer";
 
 const reducer = combineReducers({
-  positionList: getPositionList,
-  companyList: getCompanyList
+  user: userInfo
 })
 
 export default reducer

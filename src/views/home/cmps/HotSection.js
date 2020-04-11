@@ -1,17 +1,15 @@
 import homeStyle from "../home.module.scss";
 import {Button, Tabs, Row, Col} from "antd";
-import homeActions from "../../../store/actions/homeAction";
 import React, { Component } from "react";
-import { connect } from 'react-redux';
 import { inviteList } from "@/libs/SEM";
 import { getPositionListApi } from "@/api/positionApi.js";
 import { getCompanyListApi } from "@/api/companyApi.js";
-import JobCard from './JobCard'
-import CompanyCard from './CompanyCard'
+import JobCard from '@/components/JobCard/JobCard'
+import CompanyCard from '@/components/CompanyCard/CompanyCard'
 const { TabPane } = Tabs;
 
 // 热招职位&企业
-class HotSection extends Component{
+export default class HotSection extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -77,7 +75,3 @@ class HotSection extends Component{
     )
   }
 }
-
-export default connect(state => ({
-  ...state
-}), homeActions)(HotSection)

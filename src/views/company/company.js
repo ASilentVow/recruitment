@@ -3,29 +3,7 @@ import companyStyle from './company.module.scss'
 import { Filter } from '@/components/Filter/Filter'
 import { getAllCompanyListApi } from "@/api/companyApi";
 import { Row, Col, Pagination } from 'antd';
-
-function CompanyCard(props) {
-  return (
-    <div className={companyStyle.cardWrapper}>
-      <div className={companyStyle.companyInfo}>
-        <div className={companyStyle.logo}>
-          <img src={props.item.companyImg} alt="" />
-        </div>
-        <div className={companyStyle.companyText}>
-          <span>{props.item.companyName}</span>
-          <p className={companyStyle}>
-            {props.item.situation}
-            <span className={companyStyle.vLine} />
-            {props.item.type}
-          </p>
-        </div>
-      </div>
-      <div className={companyStyle.aboutInfo}>
-        <span>{props.item.slogan}</span>
-      </div>
-    </div>
-  )
-}
+import CompanyCard from "@/components/CompanyCard/CompanyCard";
 
 export default class Company extends Component {
   constructor() {

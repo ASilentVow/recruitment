@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { Button, Modal } from 'antd';
+import UnLogin from './cmps/UnLogin'
+import UserInfo from './cmps/UserInfo'
 import Home from "../home/home";
 import Position from "../position/position";
 import Company from "../company/company";
 import logo from "../../statics/images/logo.png"
 import LayoutStyle from "./layout.module.scss";
-import { LoginForm } from './cmps/LoginForm'
-import { RegistryForm } from './cmps/RegistryForm'
+import userAction from '@/store/actions/userAction';
+import { connect } from 'react-redux';
 
 // logo模块
 function NavLogo() {
@@ -18,61 +19,6 @@ function NavLogo() {
     )
 }
 
-
-// 用户操作模块
-class NavUser extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: false,
-      title: ''
-    }
-  }
-
-  form = null
-
-  openDialog = (title) => {
-    this.setState({
-      visible: true,
-      title: title
-    })
-  }
-
-  handleCancel = () => {
-    this.setState({
-      visible: false
-    })
-  }
-
-  handleSubmit = async e => {
-    const { form } = this.form.props
-    e.preventDefault();
-    const res = await form.validateFields()
-    console.log(res, 'aaa')
-  }
-
-  render() {
-    return (
-      <div className={LayoutStyle.navUser}>
-        <Button type="link" ghost size="small">我要找工作</Button>
-        <Button type="link" ghost size="small">我要招聘</Button>
-        <Button ghost size="small" onClick={() => {this.openDialog('注册')}}>注册</Button>
-        <Button ghost size="small" onClick={() => {this.openDialog('登录')}}>登录</Button>
-        <Modal
-          title={this.state.title}
-          visible={this.state.visible}
-          onCancel={this.handleCancel}
-          onOk={this.handleSubmit}
-        >
-          {
-            this.state.title === '登录' ? <LoginForm wrappedComponentRef={(form) => this.form = form} />
-              : <RegistryForm wrappedComponentRef={(form) => this.form = form} />
-          }
-        </Modal>
-      </div>
-    )
-  }
-}
 
 // 选项卡模块
 function NavTabs(props) {
@@ -105,7 +51,7 @@ function NavTabs(props) {
 }
 
 // 导航栏
-function NavBar(props) {
+function NavBarCom(props) {
   return (
     // 固定导航
     <div className={LayoutStyle.navBar}>
@@ -115,12 +61,20 @@ function NavBar(props) {
           {/* 标签栏 */}
           <NavTabs activeName={props.activeName} onClick={(name) => props.onClick(name)} />
           {/* 用户操作 */}
-          <NavUser />
+          {
+            props.user ?
+              <UserInfo history={props.history} user={props.user} logout={props.removeUser} />
+              : <UnLogin setUser={props.setUser} />
+          }
         </div>
       </div>
     </div>
   )
 }
+const NavBar = connect(state => ({
+  user: state.user
+}), userAction)(NavBarCom)
+
 
 
 // 主框架
@@ -154,6 +108,7 @@ export default class Layout extends Component{
     return (
       <div>
         <NavBar
+          history={this.props.history}
           activeName={this.state.activeName}
           onClick={(name) => this.switchRoute(name)}
         />

@@ -1,3 +1,0 @@
-// home模块
-export const CHANGE_POSITION = 'CHANGE_POSITION'
-export const CHANGE_COMPANY = 'CHANGE_COMPANY'
