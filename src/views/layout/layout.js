@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import UnLogin from './cmps/UnLogin'
 import UserInfo from './cmps/UserInfo'
-import Home from "../home/home";
-import Position from "../position/position";
-import Company from "../company/company";
 import logo from "../../statics/images/logo.png"
 import LayoutStyle from "./layout.module.scss";
 import userAction from '@/store/actions/userAction';
 import { connect } from 'react-redux';
+// 页面
+import Home from "../home/home";
+import Position from "../position/position";
+import Company from "../company/company";
+import Resume from "../resume/resume";
 
 // logo模块
 function NavLogo() {
@@ -117,6 +119,7 @@ export default class Layout extends Component{
             <Route exact path="/home" component={Home} />
             <Route exact path="/position" component={Position} />
             <Route exact path="/company" component={Company} />
+            <Route exact path="/resume" component={Resume} />
             <Redirect from="/" to="/home" />
           </Switch>
         </div>

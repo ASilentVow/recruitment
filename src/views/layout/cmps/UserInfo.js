@@ -6,6 +6,10 @@ function UserMenu(props) {
   const clickMenu = ({key}) => {
     if (key === 'logout') {
       props.logout()
+      props.history.push('/home')
+    } else {
+      if (props.history.location.pathname === '/resume') return
+      props.history.push('/resume')
     }
   }
 

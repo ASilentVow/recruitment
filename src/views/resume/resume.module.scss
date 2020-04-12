@@ -1,0 +1,14 @@
+.wrapper {
+  position: relative;
+  width: 880px;
+  margin: 20px auto;
+  min-height: 820px;
+  background-color: #fff;
+  padding: 20px;
+}
+.empty {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
