@@ -30,7 +30,25 @@ function getAllPosition() {
   })
 }
 
+function getPositionById() {
+  app.get('/getPositionById', (req, res) => {
+    const { companyId } = req.query
+    const pageSize = req.query.pageSize || 10
+    const pageNo = req.query.pageNum || 1
+    const sql = `SELECT * from job WHERE parentId=${companyId} limit ${(pageNo - 1) * pageSize}, ${pageSize}`
+    db.query(sql, (err, result) => {
+      const countSql = `SELECT COUNT(*) as count FROM job WHERE parentId=${companyId}`
+      db.query(countSql, (error, countResult) => {
+        const data = JSON.parse(JSON.stringify(result))
+        const { count } = JSON.parse(JSON.stringify(countResult))[0]
+        res.send({ data, count })
+      })
+    })
+  })
+}
+
 module.exports = {
   getPosition,
-  getAllPosition
+  getAllPosition,
+  getPositionById
 }

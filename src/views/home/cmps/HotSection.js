@@ -48,6 +48,10 @@ export default class HotSection extends Component{
     this.props.history.push(`/${name}`)
   }
 
+  skipPage = (id) => {
+    this.props.history.push({ pathname : `/companyDetail/${id}`})
+  }
+
   render () {
     return (
       <div className={homeStyle.hot}>
@@ -63,7 +67,7 @@ export default class HotSection extends Component{
           {this.state.list.map((v, i) => {
             return (
               <Col key={i} span={this.props.type === '1' ? 8 : 6}>
-                { this.props.type === '1' ? <JobCard item={v} /> : <CompanyCard item={v} /> }
+                { this.props.type === '1' ? <JobCard item={v} /> : <CompanyCard item={v} skipPage={this.skipPage} /> }
               </Col>
             )
           })}

@@ -11,6 +11,7 @@ import Home from "../home/home";
 import Position from "../position/position";
 import Company from "../company/company";
 import Resume from "../resume/resume";
+import CompanyDetail from "../companyDetail/companyDetail";
 
 // logo模块
 function NavLogo() {
@@ -120,6 +121,7 @@ export default class Layout extends Component{
             <Route exact path="/position" component={Position} />
             <Route exact path="/company" component={Company} />
             <Route exact path="/resume" component={Resume} />
+            <Route exact path="/companyDetail/:companyId" component={CompanyDetail} />
             <Redirect from="/" to="/home" />
           </Switch>
         </div>

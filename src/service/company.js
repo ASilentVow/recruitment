@@ -13,6 +13,19 @@ function getCompany() {
   })
 }
 
+function getCompanyById() {
+  app.get('/companyById', (req, res) => {
+    const { companyId } = req.query
+    const sql = `SELECT * from company WHERE companyId=${companyId}`
+    db.query(sql, (err, result) => {
+      const data = JSON.parse(JSON.stringify(result))
+      res.send({
+        data: data[0] || null
+      })
+    })
+  })
+}
+
 function getAllCompany() {
   app.get('/allCompanyPage', (req, res) => {
     const city = req.query.city
@@ -32,5 +45,6 @@ function getAllCompany() {
 
 module.exports = {
   getCompany,
-  getAllCompany
+  getAllCompany,
+  getCompanyById
 }

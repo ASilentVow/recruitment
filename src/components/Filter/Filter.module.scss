@@ -1,8 +1,11 @@
-.positionFilter {
-  width: 100%;
-  height: 120px;
+.outline {
   background-color: #fff;
+  height: 120px;
   box-shadow: 0 3px 6px rgba(6,0,1,.05);
+}
+.positionFilter {
+  margin: 0 auto;
+  width: 1000px;
   .filterWrapper {
     max-width: 1300px;
     min-width: 900px;

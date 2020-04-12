@@ -3,44 +3,7 @@ import positionStyle from './position.module.scss'
 import { Filter } from '@/components/Filter/Filter'
 import { getAllPositionListApi } from "@/api/positionApi";
 import { Pagination } from 'antd';
-
-// 职位详情
-function PositionCard(props) {
-  return (
-    <div className={positionStyle.cardWrapper}>
-      <div className={positionStyle.positionInfo}>
-        <div>
-          <div className={positionStyle.name}>{props.item.jobName}</div>
-          <div>
-            <span className={positionStyle.money}>{props.item.jobSalary}</span>
-            <span className={positionStyle.experience}>
-              {props.item.jobExperience}
-              <span className={positionStyle.vLine} />
-              {props.item.education}
-            </span>
-            <span className={positionStyle.commitPerson}>
-              {props.item.announcer}
-            </span>
-            <span className={positionStyle.commitBtn}>立即沟通</span>
-          </div>
-        </div>
-        <div>
-          <div className={positionStyle.name}>{props.item.companyName}</div>
-          <div className={positionStyle.experience}>
-            {props.item.type}
-            <span className={positionStyle.vLine} />
-            {props.item.situation}
-            <span className={positionStyle.vLine} />
-            {props.item.peopleNum}
-          </div>
-        </div>
-      </div>
-      <div className={positionStyle.tag}>
-        {props.item.slogan}
-      </div>
-    </div>
-  )
-}
+import PositionCard from "@/components/PositionCard/PositionCard";
 
 export default class Position extends Component {
   constructor() {

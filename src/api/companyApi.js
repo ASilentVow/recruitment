@@ -7,6 +7,13 @@ export function getCompanyListApi(params) {
   })
 }
 
+export function getCompanyInfoApi(params) {
+  const url = '/companyById'
+  return Http.get(url, {
+    params: params
+  })
+}
+
 export function getAllCompanyListApi(params) {
   const url = '/allCompanyPage'
   return Http.get(url, {

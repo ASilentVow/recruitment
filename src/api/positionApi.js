@@ -13,3 +13,10 @@ export function getAllPositionListApi(params) {
     params: params
   })
 }
+
+export function getCompanyPositionApi(params) {
+  const url = '/getPositionById'
+  return Http.get(url, {
+    params: params
+  })
+}
