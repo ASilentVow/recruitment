@@ -11,7 +11,7 @@ import store from "./store";
 ReactDOM.render(
   <ConfigProvider locale={zhCN}>
     <Provider store={store}>
-      <App />,
+      <App />
     </Provider>
   </ConfigProvider>,
   document.getElementById('root')

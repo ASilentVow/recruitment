@@ -47,8 +47,21 @@ function getPositionById() {
   })
 }
 
+function getPositionInfo() {
+  app.get('/getPositionInfo', (req, res) => {
+    const { id } = req.query
+    const sql = `SELECT * from job WHERE id=${id}`
+    db.query(sql, (err, result) => {
+      if (err) throw err
+      const data = JSON.parse(JSON.stringify(result))
+      res.send({ data: data[0] })
+    })
+  })
+}
+
 module.exports = {
   getPosition,
   getAllPosition,
-  getPositionById
+  getPositionById,
+  getPositionInfo
 }

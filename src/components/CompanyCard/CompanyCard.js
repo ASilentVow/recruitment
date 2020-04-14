@@ -3,7 +3,7 @@ import React from "react";
 
 export default function CompanyCard(props) {
   return (
-    <div className={Style.cardWrapper} onClick={() => {props.skipPage(props.item.companyId)}}>
+    <div className={Style.cardWrapper} onClick={() => {props.skipPage(props.item.companyId, '1')}}>
       <div className={Style.companyInfo}>
         <div className={Style.logo}>
           <img src={props.item.companyImg} alt="" />

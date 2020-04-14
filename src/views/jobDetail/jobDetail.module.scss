@@ -1,0 +1,61 @@
+.info {
+  background-color: rgb(68, 76, 95);
+  width: 100%;
+  height: 150px;
+  color: #fff;
+}
+
+.wrapper {
+  padding: 20px 10px;
+  max-width: 1300px;
+  min-width: 900px;
+  margin: 0 auto;
+}
+
+.name {
+  font-size: 32px;
+  margin-right: 10px;
+}
+
+.salary {
+  font-weight: bold;
+  color: #fa6a43;
+  font-size: 30px;
+}
+
+.desc {
+  color: rgba(255,255,255,.7);
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.announcer {
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.jobDesc {
+  color: #61687c;
+  line-height: 36px;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.companyInfo {
+  padding: 20px;
+  line-height: 26px;
+  color: #414a60;
+  font-size: 14px;
+  p {
+    line-height: 20px;
+    margin-bottom: 26px;
+  }
+}
+
+.title {
+  line-height: 25px;
+  margin-bottom: 25px;
+  font-size: 15px;
+  font-weight: 500;
+}

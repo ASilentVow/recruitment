@@ -20,3 +20,10 @@ export function getCompanyPositionApi(params) {
     params: params
   })
 }
+
+export function getPositionInfo(params) {
+  const url = '/getPositionInfo'
+  return Http.get(url, {
+    params: params
+  })
+}

@@ -39,9 +39,13 @@ export default class Position extends Component {
     await this.getList()
   }
 
-  pageChange = async (page, pageSize) => {
+  pageChange = async (page) => {
     await this.setState({ pageNo: page })
     if (this.flag) await this.getList()
+  }
+
+  skipPage = (id) => {
+    this.props.history.push({ pathname : `/jobDetail/${id}`})
   }
 
   render() {
@@ -49,7 +53,7 @@ export default class Position extends Component {
       <div className={positionStyle.position}>
         <Filter active={this.state.activeCity} clickItem={this.clickFilter} />
         <div className={positionStyle.content}>
-          {this.state.list.map(v => <PositionCard key={v.id} item={v} />)}
+          {this.state.list.map(v => <PositionCard key={v.id} item={v} skipPage={this.skipPage} />)}
           <div style={{ width: '1000px', textAlign: 'center' }}>
             <Pagination onChange={this.pageChange} current={this.state.pageNo} total={this.state.count} />
           </div>

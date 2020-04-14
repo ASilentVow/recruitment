@@ -45,6 +45,10 @@ export default class Company extends Component {
     if (this.flag) this.setState({ list: data, count: count })
   }
 
+  skipPage = (id) => {
+    this.props.history.push({ pathname : `/companyDetail/${id}`})
+  }
+
   render() {
     return (
       <div className={companyStyle.company}>
@@ -54,7 +58,7 @@ export default class Company extends Component {
             {this.state.list.map((v, i) => {
               return (
                 <Col key={i} span={6}>
-                 <CompanyCard key={v.id} item={v} />
+                 <CompanyCard key={v.id} item={v} skipPage={this.skipPage} />
                 </Col>
               )
             })}

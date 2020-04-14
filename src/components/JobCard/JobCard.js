@@ -3,7 +3,7 @@ import React from "react";
 
 export default function JobCard(props) {
  return (
-   <div className={Style.cardItem}>
+   <div className={Style.cardItem} onClick={() => {props.skipPage(props.item.id, '2')}}>
      <div className={Style.hotPositionInfo}>
        <div>
          <span>{props.item.jobName}</span>

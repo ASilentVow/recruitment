@@ -3,7 +3,7 @@ import React from "react";
 
 export default function PositionCard(props) {
   return (
-    <div className={Style.cardWrapper}>
+    <div className={Style.cardWrapper} onClick={() => {props.skipPage(props.item.id)}}>
       <div className={Style.positionInfo}>
         <div>
           <div className={Style.name}>{props.item.jobName}</div>
@@ -17,7 +17,7 @@ export default function PositionCard(props) {
             <span className={Style.commitPerson}>
               {props.item.announcer}
             </span>
-            <span className={Style.commitBtn}>立即沟通</span>
+            <span className={Style.commitBtn}>立即投递</span>
           </div>
         </div>
         <div>
