@@ -20,7 +20,10 @@ class Resume extends Component{
   }
 
   componentDidMount() {
-    if(!this.props.user) this.props.history.push('/home')
+    if(!this.props.user) {
+      this.props.history.push('/home')
+      return
+    }
     this.getUserResume()
   }
 

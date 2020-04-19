@@ -7,16 +7,24 @@ function UserMenu(props) {
     if (key === 'logout') {
       props.logout()
       props.history.push('/home')
+      window.location.reload()
     } else {
       if (props.history.location.pathname === '/resume') return
       props.history.push('/resume')
     }
   }
 
-  const menuList = [
-    { label: '我的简历', icon: 'edit', key: 'paper' },
-    { label: '退出登录', icon: 'logout', key: 'logout' }
-  ]
+  let menuList = []
+  if(props.user && props.user.type === '0') {
+    menuList = [
+      { label: '退出登录', icon: 'logout', key: 'logout' }
+    ]
+  } else {
+    menuList = [
+      { label: '我的简历', icon: 'edit', key: 'paper' },
+      { label: '退出登录', icon: 'logout', key: 'logout' }
+    ]
+  }
 
   return (
     <Menu onClick={clickMenu}>

@@ -17,7 +17,11 @@ export default function PositionCard(props) {
             <span className={Style.commitPerson}>
               {props.item.announcer}
             </span>
-            <span className={Style.commitBtn}>立即投递</span>
+            <span className={Style.commitBtn}>
+              {
+                !props.hiddenCommit ? '查看职位' : '管理职位'
+              }
+            </span>
           </div>
         </div>
         <div>

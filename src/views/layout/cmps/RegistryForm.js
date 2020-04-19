@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Form, Icon, Input} from "antd";
+import {Form, Icon, Input, Radio} from "antd";
 
 class Registry extends Component{
   constructor(props) {
@@ -7,6 +7,15 @@ class Registry extends Component{
     this.state = {
       confirmDirty: false
     }
+  }
+
+  componentDidMount() {
+    this.initForm()
+  }
+
+  initForm = () => {
+    const { form } = this.props;
+    form.setFieldsValue({ type: '1' })
   }
 
   compareToFirstPassword = (rule, value, callback) => {
@@ -36,8 +45,16 @@ class Registry extends Component{
     return (
       <Form>
         <Form.Item>
+          {getFieldDecorator('type')(
+            <Radio.Group>
+              <Radio.Button value="1">我要找工作</Radio.Button>
+              <Radio.Button value="0">我要招聘</Radio.Button>
+            </Radio.Group>
+          )}
+        </Form.Item>
+        <Form.Item>
           {getFieldDecorator('username', {
-            rules: [{ required: true, message: '请输入用户名!' }],
+            rules: [{ required: true, message: '请输入用户名!' }]
           })(
             <Input
               prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}

@@ -13,6 +13,7 @@ import Company from "../company/company";
 import Resume from "../resume/resume";
 import CompanyDetail from "../companyDetail/companyDetail";
 import JobDetail from "../jobDetail/jobDetail";
+import EmployerHome from "../employerHome/employerHome"
 
 // logo模块
 function NavLogo() {
@@ -26,18 +27,28 @@ function NavLogo() {
 
 // 选项卡模块
 function NavTabs(props) {
-  const navItem = [
-    {
-      label: '首页',
-      key: 'home'
-    }, {
-      label: '职位',
-      key: 'position'
-    }, {
-      label: '公司',
-      key: 'company'
-    }
-  ]
+  let navItem = []
+  if(props.user && props.user.type === '0') {
+    navItem = [
+      {
+        label: '我的公司',
+        key: 'home'
+      }
+    ]
+  } else {
+    navItem = [
+      {
+        label: '首页',
+        key: 'home'
+      }, {
+        label: '职位',
+        key: 'position'
+      }, {
+        label: '公司',
+        key: 'company'
+      }
+    ]
+  }
   const listItem = navItem.map(v => {
     return (
         <li onClick={() => props.onClick(v.key)} className={LayoutStyle.navItem} key={v.key}>
@@ -55,7 +66,7 @@ function NavTabs(props) {
 }
 
 // 导航栏
-function NavBarCom(props) {
+function NavBar(props) {
   return (
     // 固定导航
     <div className={LayoutStyle.navBar}>
@@ -63,26 +74,22 @@ function NavBarCom(props) {
         <div className={LayoutStyle.navContent}>
           <NavLogo />
           {/* 标签栏 */}
-          <NavTabs activeName={props.activeName} onClick={(name) => props.onClick(name)} />
+          <NavTabs user={props.user} activeName={props.activeName} onClick={(name) => props.onClick(name)} />
           {/* 用户操作 */}
           {
             props.user ?
               <UserInfo history={props.history} user={props.user} logout={props.removeUser} />
-              : <UnLogin setUser={props.setUser} />
+              : <UnLogin history={props.history} setUser={props.setUser} />
           }
         </div>
       </div>
     </div>
   )
 }
-const NavBar = connect(state => ({
-  user: state.user
-}), userAction)(NavBarCom)
-
 
 
 // 主框架
-export default class Layout extends Component{
+class Layout extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -91,6 +98,11 @@ export default class Layout extends Component{
   }
 
   componentDidMount() {
+    if(this.props.user && this.props.user.type === '0') {
+      this.HomePage = EmployerHome
+    } else {
+      this.HomePage = Home
+    }
     this.setState({
       activeName: this.props.location.pathname.replace('/', '')
     })
@@ -100,6 +112,8 @@ export default class Layout extends Component{
       })
     })
   }
+
+  HomePage = null
 
   // 路由切换
   switchRoute = (routeName) => {
@@ -112,13 +126,16 @@ export default class Layout extends Component{
     return (
       <div>
         <NavBar
+          removeUser={this.props.removeUser}
+          setUser={this.props.setUser}
+          user={this.props.user}
           history={this.props.history}
           activeName={this.state.activeName}
           onClick={(name) => this.switchRoute(name)}
         />
         <div className="content">
           <Switch>
-            <Route exact path="/home" component={Home} />
+            <Route exact path="/home" component={this.HomePage} />
             <Route exact path="/position" component={Position} />
             <Route exact path="/company" component={Company} />
             <Route exact path="/resume" component={Resume} />
@@ -131,3 +148,7 @@ export default class Layout extends Component{
     )
   }
 }
+
+export default connect(state => ({
+  user: state.user
+}), userAction)(Layout)

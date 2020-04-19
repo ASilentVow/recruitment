@@ -14,6 +14,13 @@ export function getCompanyInfoApi(params) {
   })
 }
 
+export function getSelectCompany(params) {
+  const url = '/selectCompany'
+  return Http.get(url, {
+    params: params
+  })
+}
+
 export function getAllCompanyListApi(params) {
   const url = '/allCompanyPage'
   return Http.get(url, {

@@ -13,6 +13,17 @@ function getCompany() {
   })
 }
 
+function getSelectCompany() {
+  app.get('/selectCompany', (req, res) => {
+    const name = req.query.name
+    const sql = `SELECT * from company WHERE companyName like '%${name}%'`
+    db.query(sql, (err, result) => {
+      const data = JSON.parse(JSON.stringify(result))
+      res.send(data)
+    })
+  })
+}
+
 function getCompanyById() {
   app.get('/companyById', (req, res) => {
     const { companyId } = req.query
@@ -46,5 +57,6 @@ function getAllCompany() {
 module.exports = {
   getCompany,
   getAllCompany,
-  getCompanyById
+  getCompanyById,
+  getSelectCompany
 }

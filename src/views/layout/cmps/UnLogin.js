@@ -39,15 +39,17 @@ export default class unLogin extends Component{
     if (code === '200') {
       this.setState({ visible: false })
       form.resetFields()
-      if (this.state.title === '登录') this.props.setUser(data)
+      if (this.state.title === '登录') {
+        this.props.setUser(data)
+        this.props.history.push('/home')
+        window.location.reload()
+      }
     }
   }
 
   render() {
     return (
       <div className={LayoutStyle.navUser}>
-        <Button type="link" ghost size="small">我要找工作</Button>
-        <Button type="link" ghost size="small">我要招聘</Button>
         <Button ghost size="small" onClick={() => {this.openDialog('注册')}}>注册</Button>
         <Button ghost size="small" onClick={() => {this.openDialog('登录')}}>登录</Button>
         <Modal

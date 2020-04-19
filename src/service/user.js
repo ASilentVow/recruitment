@@ -8,12 +8,12 @@ function registry() {
       params += chunk
     })
     req.on("end", () => {
-      const { username, password } = JSON.parse(params)
+      const { username, password, type } = JSON.parse(params)
       const querySql = `SELECT * from user WHERE username="${username}"`
       db.query(querySql, (err, result) => {
         const userList = JSON.parse(JSON.stringify(result))
         if (!userList.length) {
-          const insertSql = `INSERT INTO user (username, password) VALUES ("${username}", "${password}")`
+          const insertSql = `INSERT INTO user (username, password, type) VALUES ("${username}", "${password}", "${type}")`
           db.query(insertSql, (error) => {
             if (error) throw error
             res.send({
@@ -47,7 +47,7 @@ function login() {
           const user = userList[0]
           if (password === user.password) {
             res.send({
-              data: { id: user.id, username: user.username },
+              data: user,
               code: SUCCESS_CODE,
               msg: '登录成功!'
             })
@@ -66,7 +66,26 @@ function login() {
   })
 }
 
+function updateUserCompany() {
+  app.post('/updateCompany', (req, res) => {
+    let params = ''
+    req.on("data", (chunk) => {
+      params += chunk
+    })
+    req.on("end", () => {
+      const {companyId, id} = JSON.parse(params)
+      const sql = 'UPDATE user SET companyId=? WHERE id=?'
+      const paramsArr = [companyId, id]
+      db.query(sql, paramsArr,(err) => {
+        if(err) throw err
+        res.send({ code: SUCCESS_CODE })
+      })
+    })
+  })
+}
+
 module.exports = {
   registry,
-  login
+  login,
+  updateUserCompany
 }
