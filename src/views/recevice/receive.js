@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Style from './receive.module.scss'
-import {List, Button, Avatar, Modal} from 'antd';
-import { getReceive } from "@/api/deliveryApi";
+import {List, Button, Avatar, Modal, Tag} from 'antd';
+import { getReceive, updateDelivery } from "@/api/deliveryApi";
 import { connect } from 'react-redux';
 import userAction from "@/store/actions/userAction";
 import ResumeInfo from "@/views/resume/cmps/ResumeInfo";
@@ -40,6 +40,11 @@ class Receive extends Component{
     })
   }
 
+  editSituation = async (id, flag) => {
+    await updateDelivery({id, flag})
+    this.getDataList()
+  }
+
   flag = true
 
   render() {
@@ -52,11 +57,20 @@ class Receive extends Component{
             pagination={{ pageSize: 10 }}
             renderItem={item => (
               <List.Item
-                actions={[<Button key="view" onClick={() => { this.viewResume(item.userId) }}>查看简历</Button>]}
+                actions={[
+                  <Button key="view" onClick={() => { this.viewResume(item.userId) }}>查看简历</Button>,
+                  <Button disabled={item.situation !== '0'} key="view" type="primary" onClick={() => { this.editSituation(item.id,'1') }}>邀请面试</Button>,
+                  <Button disabled={item.situation !== '0'} key="view" type="danger" onClick={() => { this.editSituation(item.id,'2') }}>拒绝面试</Button>
+                ]}
               >
                   <List.Item.Meta
                     avatar={<Avatar shape="square" icon="user" />}
-                    title={<span style={{ fontWeight: 'bold', fontSize: '16px' }}>{item.username}</span>}
+                    title={<span style={{ fontWeight: 'bold', fontSize: '16px' }}>
+                      {item.username}
+                      <Tag color="#108ee9" style={{marginLeft: '5px'}}>
+                        {item.situation === '0' ? '待处置' : item.situation === '1' ? '已邀请' : '已拒绝'}
+                      </Tag>
+                    </span>}
                     description={`应聘职位：${item.jobName}`}
                   />
                   <div>我对这个职位非常感兴趣，希望能和你沟通一下！</div>

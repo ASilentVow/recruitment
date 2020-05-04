@@ -10,7 +10,7 @@ export function Filter(props) {
       <div className={style.positionFilter}>
         <div className={style.filterWrapper}>
           <div className={style.search}>
-            <NavSearch />
+            <NavSearch history={props.history} />
           </div>
           <div className={style.city}>
             <span className={style.greyText}>{props.active}</span>

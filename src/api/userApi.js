@@ -15,6 +15,11 @@ export function updateUserCompany(params) {
   return Http.post(url, params)
 }
 
+export function editPwd(params) {
+  const url = '/editPwd'
+  return Http.post(url, params)
+}
+
 export function getAllUser(params) {
   const url = '/getAllUser'
   return Http.get(url, {

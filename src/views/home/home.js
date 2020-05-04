@@ -27,35 +27,13 @@ function SearchBar(props) {
             {/* logo */}
             <NavLogo />
             {/* 搜索栏 */}
-            <NavSearch />
+            <NavSearch history={props.history} />
           </div>
         </div>
       </div>
     )
   }
   return null
-}
-
-// 热门职位
-function HotPosition() {
-  const posList = [
-    'Java',
-    'PHP',
-    'C++',
-    'web前端',
-    'iOS',
-    'Android',
-    '产品经理',
-    'UI设计师',
-    '产品运营'
-  ]
-  const list = posList.map((v, i) => <span key={i} className={homeStyle.posItem}>{v}</span>)
-  return (
-      <div className={homeStyle.hotPosition}>
-        <span>热门职位:</span>
-        {list}
-      </div>
-  )
 }
 
 // 热门区域
@@ -100,13 +78,11 @@ export default class Home extends Component{
     const navShow = this.state.navShow
     return (
       <div className={homeStyle.home}>
-        <SearchBar navShow={navShow} onClick={(name) => this.switchRoute(name)} />
+        <SearchBar history={this.props.history} navShow={navShow} onClick={(name) => this.switchRoute(name)} />
         <div className={homeStyle.homeWrapper}>
           <div className={homeStyle.homeSearch}>
             {/* 首页搜索 */}
-            <NavSearch />
-            {/* 热门职位搜索 */}
-            <HotPosition />
+            <NavSearch history={this.props.history} />
           </div>
           <Section history={this.props.history} title="热招职位" type="1" />
           <Section history={this.props.history} title="热门企业" type="2" />

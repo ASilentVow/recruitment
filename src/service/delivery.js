@@ -10,9 +10,8 @@ function insertDelivery() {
     })
     req.on("end", () => {
       const { userId, companyId, jobId } = JSON.parse(params)
-      const sql = 'INSERT INTO delivery(jobId, companyId, userId) VALUES (?,?,?)'
+      const sql = 'INSERT INTO delivery(jobId, companyId, userId, situation) VALUES (?,?,?,0)'
       const arr = [jobId, `${companyId}`, userId]
-      console.log(arr)
       db.query(sql, arr, (error) => {
         if (error) throw error
         res.send({ code: SUCCESS_CODE, msg: '投递成功!' })
@@ -23,18 +22,40 @@ function insertDelivery() {
 
 function getDelivery() {
   app.get('/getDelivery', async (req, res) => {
-    const { jobList } = req.query
+    const { id } = req.query
     const promiseList = []
-    jobList.forEach(v => {
-      promiseList.push(new Promise((resolved, rejected) => {
-        db.query(`SELECT * from job WHERE id=${v}`, (error, result) => {
-          if(error) rejected(error)
-          resolved(JSON.parse(JSON.stringify(...result)))
-        })
-      }))
+    db.query(`SELECT * from delivery WHERE userId=${id}`, async (error1, result1) => {
+      const jobList = JSON.parse(JSON.stringify(result1))
+      jobList.forEach(v => {
+        promiseList.push(new Promise((resolved, rejected) => {
+          db.query(`SELECT * from job WHERE id=${v.jobId}`, (error2, result2) => {
+            if(error2) rejected(error2)
+            const jobInfo = JSON.parse(JSON.stringify(...result2))
+            resolved({ ...jobInfo, situation: v.situation })
+          })
+        }))
+      })
+      const promiseRes = await Promise.all(promiseList)
+      res.send({ data: promiseRes })
     })
-    const promiseRes = await Promise.all(promiseList)
-    res.send({ data: promiseRes })
+  })
+}
+
+function updateDelivery() {
+  app.post('/updateDelivery', (req, res) => {
+    let params = ''
+    req.on("data", (chunk) => {
+      params += chunk
+    })
+    req.on("end", () => {
+      const { id, flag } = JSON.parse(params)
+      const sql = 'UPDATE delivery SET situation=? WHERE id=?'
+      const arr = [flag, id]
+      db.query(sql, arr, (error) => {
+        if (error) throw error
+        res.send({ code: SUCCESS_CODE, msg: '操作成功!' })
+      })
+    })
   })
 }
 
@@ -52,7 +73,7 @@ function getReceive() {
             db.query(`SELECT jobName from job WHERE id=${v.jobId}`, (error2, result2) => {
               if(error) rejected(error2)
               const jobInfo = JSON.parse(JSON.stringify(...result2))
-              resolved({ ...username, ...jobInfo, userId: v.userId })
+              resolved({ ...username, ...jobInfo, userId: v.userId, id: v.id, situation: v.situation })
             })
           })
         }))
@@ -66,5 +87,6 @@ function getReceive() {
 module.exports = {
   insertDelivery,
   getDelivery,
-  getReceive
+  getReceive,
+  updateDelivery
 }

@@ -24,8 +24,8 @@ class delivery extends Component{
   }
 
   async getDataList() {
-    const jobList = this.props.user.deliveryList
-    const { data } = await getDelivery({ jobList })
+    const id = this.props.user.id
+    const { data } = await getDelivery({ id })
     this.setState({ dataList: data })
   }
 
@@ -45,7 +45,7 @@ class delivery extends Component{
           </h1>
         </div>
         <div className={Style.list}>
-          {this.state.dataList.map(v => <PositionCard key={v.id} item={v} skipPage={this.skipPage} />)}
+          {this.state.dataList.map(v => <PositionCard showTag key={v.id} item={v} skipPage={this.skipPage} />)}
         </div>
       </div>
     )

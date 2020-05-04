@@ -1,6 +1,8 @@
 import React, {Component} from "react";
-import { Avatar, Menu, Dropdown, Icon } from 'antd';
+import { Avatar, Menu, Dropdown, Icon, Modal } from 'antd';
 import LayoutStyle from "@/views/layout/layout.module.scss";
+import EditPwdForm from "@/views/layout/cmps/EditPwdForm";
+import { editPwd } from "@/api/userApi";
 
 function UserMenu(props) {
   const clickMenu = ({key}) => {
@@ -17,6 +19,9 @@ function UserMenu(props) {
       case 'delivery':
         if (props.history.location.pathname === '/delivery') return
         props.history.push('/delivery')
+        break
+      case 'edit':
+        props.openModal()
         break
       default:
         if (props.history.location.pathname === '/receive') return
@@ -38,7 +43,12 @@ function UserMenu(props) {
     ]
   }
 
-  menuList.push({ label: '退出登录', icon: 'logout', key: 'logout' })
+  menuList.push(
+    ...[
+        { label: '修改密码', icon: 'lock', key: 'edit' },
+        { label: '退出登录', icon: 'logout', key: 'logout' }
+      ]
+  )
 
   return (
     <Menu onClick={clickMenu}>
@@ -57,10 +67,31 @@ function UserMenu(props) {
 }
 
 export default class UserInfo extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false
+    }
+  }
+
+  openModal = () => {
+    this.setState({ visible: true })
+  }
+
+  form = null
+
+  handleSubmit = async e => {
+    const { form } = this.form.props
+    e.preventDefault();
+    const res = await form.validateFields()
+    await editPwd({...res, id: this.props.user.id})
+    this.setState({ visible: false })
+  }
+
   render() {
     return (
       <div className={LayoutStyle.navUser}>
-        <Dropdown overlay={UserMenu(this.props)} trigger={['click']}>
+        <Dropdown overlay={UserMenu({...this.props, openModal:this.openModal})} trigger={['click']}>
           <div style={{ cursor: 'pointer' }}>
             <Avatar
               icon="user"
@@ -72,6 +103,14 @@ export default class UserInfo extends Component{
             <Icon type="down" />
           </div>
         </Dropdown>
+        <Modal
+          title="修改密码"
+          visible={this.state.visible}
+          onCancel={() => {this.setState({ visible: false })}}
+          onOk={this.handleSubmit}
+        >
+          <EditPwdForm wrappedComponentRef={(form) => this.form = form} />
+        </Modal>
       </div>
     )
   }

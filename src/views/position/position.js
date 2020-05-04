@@ -51,7 +51,7 @@ export default class Position extends Component {
   render() {
     return (
       <div className={positionStyle.position}>
-        <Filter active={this.state.activeCity} clickItem={this.clickFilter} />
+        <Filter history={this.props.history} active={this.state.activeCity} clickItem={this.clickFilter} />
         <div className={positionStyle.content}>
           {this.state.list.map(v => <PositionCard key={v.id} item={v} skipPage={this.skipPage} />)}
           <div style={{ width: '1000px', margin: '20px auto', textAlign: 'center' }}>

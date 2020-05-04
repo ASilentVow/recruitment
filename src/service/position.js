@@ -108,11 +108,23 @@ function delPosition() {
   })
 }
 
+function getSelectPosition() {
+  app.get('/selectPosition', (req, res) => {
+    const name = req.query.name
+    const sql = `SELECT * from job WHERE jobName like '%${name}%'`
+    db.query(sql, (err, result) => {
+      const data = JSON.parse(JSON.stringify(result))
+      res.send(data)
+    })
+  })
+}
+
 module.exports = {
   getPosition,
   getAllPosition,
   getPositionById,
   getPositionInfo,
   insertPosition,
-  delPosition
+  delPosition,
+  getSelectPosition
 }

@@ -1,4 +1,5 @@
 import Style from "./PositionCard.module.scss";
+import { Tag } from 'antd'
 import React from "react";
 
 export default function PositionCard(props) {
@@ -6,7 +7,13 @@ export default function PositionCard(props) {
     <div className={Style.cardWrapper} onClick={() => {props.skipPage(props.item.id)}}>
       <div className={Style.positionInfo}>
         <div>
-          <div className={Style.name}>{props.item.jobName}</div>
+          <div className={Style.name}>
+            {props.item.jobName}
+            {
+              (!props.showTag || props.item.situation === '0') ? '' :
+              <Tag color="#108ee9" style={{marginLeft: '5px'}}>{props.item.situation === '1' ? '待面试' : '不合适'}</Tag>
+            }
+          </div>
           <div>
             <span className={Style.money}>{props.item.jobSalary}</span>
             <span className={Style.experience}>

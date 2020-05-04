@@ -5,6 +5,11 @@ export function sendDelivery(params) {
   return Http.post(url, params)
 }
 
+export function updateDelivery(params) {
+  const url = '/updateDelivery'
+  return Http.post(url, params)
+}
+
 export function getDelivery(params) {
   const url = '/getDelivery'
   return Http.get(url, {

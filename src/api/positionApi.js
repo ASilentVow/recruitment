@@ -32,3 +32,10 @@ export function insertPosition(params) {
   const url = '/insertPosition'
   return Http.post(url, params)
 }
+
+export function getSelectPosition(params) {
+  const url = '/selectPosition'
+  return Http.get(url, {
+    params: params
+  })
+}

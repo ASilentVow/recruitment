@@ -137,6 +137,33 @@ function editUser() {
   })
 }
 
+function editPwd() {
+  app.post('/editPwd', (req, res) => {
+    let params = ''
+    req.on("data", (chunk) => {
+      params += chunk
+    })
+    req.on("end", () => {
+      const { oldPassword, password, id } = JSON.parse(params)
+      const sql = `SELECT password FROM user WHERE id=${id}`
+      db.query(sql,(err, result) => {
+        if(err) throw err
+        const pwd = JSON.parse(JSON.stringify(result))[0].password
+        if (oldPassword !== pwd) {
+          res.send({ code: ERR_CODE, msg: '旧密码不正确!' })
+          return
+        }
+        const updateSql = `UPDATE user SET password=? WHERE id=?`
+        const arr = [password, id]
+        db.query(updateSql, arr,error => {
+          if (error) throw error
+          res.send({ code: SUCCESS_CODE, msg: '修改成功!' })
+        })
+      })
+    })
+  })
+}
+
 
 module.exports = {
   registry,
@@ -144,5 +171,6 @@ module.exports = {
   updateUserCompany,
   getAllUser,
   delUser,
-  editUser
+  editUser,
+  editPwd
 }

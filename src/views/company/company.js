@@ -52,7 +52,7 @@ export default class Company extends Component {
   render() {
     return (
       <div className={companyStyle.company}>
-        <Filter active={this.state.activeCity} clickItem={this.clickFilter} />
+        <Filter history={this.props.history} active={this.state.activeCity} clickItem={this.clickFilter} />
         <div className={companyStyle.content}>
           <Row gutter={25}>
             {this.state.list.map((v, i) => {
