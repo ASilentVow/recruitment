@@ -27,3 +27,8 @@ export function getPositionInfo(params) {
     params: params
   })
 }
+
+export function insertPosition(params) {
+  const url = '/insertPosition'
+  return Http.post(url, params)
+}

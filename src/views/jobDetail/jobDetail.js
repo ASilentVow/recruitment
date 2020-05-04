@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import { getPositionInfo } from "@/api/positionApi";
+import { sendDelivery } from "@/api/deliveryApi";
 import Style from './jobDetail.module.scss';
 import { Row, Col, Button, Avatar, Icon } from "antd";
 import { headerImg, jobDesc } from "@/libs/SEM";
+import { connect } from "react-redux";
+import userAction from "@/store/actions/userAction";
+import { message } from "antd";
 
-export default class JobDetail extends Component {
+class JobDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,6 +28,21 @@ export default class JobDetail extends Component {
     const { id } = this.props.match.params
     const { data } = await getPositionInfo({id})
     if (this.flag) await this.setState({ info: data })
+  }
+
+  async delivery() {
+    if (!this.props.user) {
+      message.info('请登录！')
+      return
+    }
+    const params = {}
+    params.userId = this.props.user.id
+    params.companyId = this.state.info.parentId
+    params.jobId = this.state.info.id
+    await sendDelivery(params)
+    const deliveryList = this.props.user.deliveryList
+    deliveryList.push(params.jobId)
+    this.props.setUser({ ...this.props.user, deliveryList })
   }
 
   flag = true
@@ -47,7 +66,14 @@ export default class JobDetail extends Component {
                   </div>
                 </Col>
                 <Col style={{textAlign: "right", lineHeight: "60px"}} span={12}>
-                  <Button size="large" type="primary">投递简历</Button>
+                  <Button
+                    disabled={this.props.user && this.props.user.deliveryList.includes(this.state.info.id)}
+                    size="large"
+                    type="primary"
+                    onClick={() => {this.delivery()}}
+                  >
+                    {this.props.user && this.props.user.deliveryList.includes(this.state.info.id) ? '已投递' : '投递简历'}
+                  </Button>
                 </Col>
               </Row>
             </div>
@@ -91,3 +117,7 @@ export default class JobDetail extends Component {
     }
   }
 }
+
+export default connect(state => ({
+  user: state.user
+}), userAction)(JobDetail)

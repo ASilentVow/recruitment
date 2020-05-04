@@ -65,7 +65,7 @@ export default function ResumeInfo(props) {
           <Descriptions.Item label="描述">{props.info.volunteer || '无'}</Descriptions.Item>
         </Descriptions>
       </div>
-      <div style={{marginTop: '20px', textAlign: 'right'}}>
+      <div style={{marginTop: '20px', textAlign: 'right', display: `${props.btnHide ? 'none': 'block'}`}}>
         <Button type="primary" onClick={() => {props.openModal()}}>修改简历</Button>
       </div>
     </div>

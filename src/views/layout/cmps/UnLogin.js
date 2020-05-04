@@ -37,11 +37,15 @@ export default class unLogin extends Component{
     const api = this.state.title === '登录' ? loginUser : registryUser
     const { code, data } = await api(res)
     if (code === '200') {
+      // 关闭弹出
       this.setState({ visible: false })
       form.resetFields()
       if (this.state.title === '登录') {
+        // 保存用户信息
         this.props.setUser(data)
+        // 定位到首页
         this.props.history.push('/home')
+        // 刷新页面
         window.location.reload()
       }
     }

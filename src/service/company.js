@@ -1,4 +1,5 @@
 const { app, db } = require('./app')
+const { SUCCESS_CODE } = require('./SERVE_SEM')
 
 function getCompany() {
   app.get('/companyPage', (req, res) => {
@@ -42,9 +43,13 @@ function getAllCompany() {
     const city = req.query.city
     const pageSize = req.query.pageSize || 24
     const pageNo = req.query.pageNum || 1
-    const sql = `SELECT * from company WHERE city="${city}" limit ${(pageNo - 1) * pageSize}, ${pageSize}`
+    const sql = req.query.city ?
+      `SELECT * from company WHERE city="${city}" limit ${(pageNo - 1) * pageSize}, ${pageSize}` :
+      `SELECT * from company`
     db.query(sql, (err, result) => {
-      const countSql = `SELECT COUNT(*) as count FROM company WHERE city="${city}"`
+      const countSql = req.query.city ?
+        `SELECT COUNT(*) as count FROM company WHERE city="${city}"` :
+        `SELECT COUNT(*) as count FROM company`
       db.query(countSql, (error, countResult) => {
         const data = JSON.parse(JSON.stringify(result))
         const { count } = JSON.parse(JSON.stringify(countResult))[0]
@@ -54,9 +59,29 @@ function getAllCompany() {
   })
 }
 
+function delCompany() {
+  app.post('/delCompany', (req, res) => {
+    let params = ''
+    req.on("data", (chunk) => {
+      params += chunk
+    })
+    req.on("end", () => {
+      const {id} = JSON.parse(params)
+      const sql = `DELETE FROM company WHERE id=${id}`
+      db.query(sql, err => {
+        if(err) throw err
+        res.send({
+          code: SUCCESS_CODE, msg: '删除成功!'
+        })
+      })
+    })
+  })
+}
+
 module.exports = {
   getCompany,
   getAllCompany,
   getCompanyById,
-  getSelectCompany
+  getSelectCompany,
+  delCompany
 }

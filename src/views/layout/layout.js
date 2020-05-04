@@ -14,10 +14,14 @@ import Resume from "../resume/resume";
 import CompanyDetail from "../companyDetail/companyDetail";
 import JobDetail from "../jobDetail/jobDetail";
 import EmployerHome from "../employerHome/employerHome"
+import Delivery from "../delivery/delivery"
+import Receive from "../recevice/receive"
+import Management from "../management/management"
 
 // logo模块
 function NavLogo() {
     return (
+        // LayoutStyle(layout.module.scss)中的navLogo
         <div className={LayoutStyle.navLogo}>
             <img src={logo} alt="" />
         </div>
@@ -32,6 +36,13 @@ function NavTabs(props) {
     navItem = [
       {
         label: '我的公司',
+        key: 'home'
+      }
+    ]
+  } else if (props.user && props.user.type === '2') {
+    navItem = [
+      {
+        label: '数据管理',
         key: 'home'
       }
     ]
@@ -100,6 +111,8 @@ class Layout extends Component{
   componentDidMount() {
     if(this.props.user && this.props.user.type === '0') {
       this.HomePage = EmployerHome
+    } else if (this.props.user && this.props.user.type === '2') {
+      this.HomePage = Management
     } else {
       this.HomePage = Home
     }
@@ -138,6 +151,8 @@ class Layout extends Component{
             <Route exact path="/home" component={this.HomePage} />
             <Route exact path="/position" component={Position} />
             <Route exact path="/company" component={Company} />
+            <Route exact path="/receive" component={Receive} />
+            <Route exact path="/delivery" component={Delivery} />
             <Route exact path="/resume" component={Resume} />
             <Route exact path="/companyDetail/:companyId" component={CompanyDetail} />
             <Route exact path="/jobDetail/:id" component={JobDetail} />
@@ -149,6 +164,8 @@ class Layout extends Component{
   }
 }
 
+// state储存变量的地方，例如用户信息（user）
+// userAction是方法，用于改变user的值
 export default connect(state => ({
   user: state.user
 }), userAction)(Layout)

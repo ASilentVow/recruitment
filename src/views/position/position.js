@@ -54,7 +54,7 @@ export default class Position extends Component {
         <Filter active={this.state.activeCity} clickItem={this.clickFilter} />
         <div className={positionStyle.content}>
           {this.state.list.map(v => <PositionCard key={v.id} item={v} skipPage={this.skipPage} />)}
-          <div style={{ width: '1000px', textAlign: 'center' }}>
+          <div style={{ width: '1000px', margin: '20px auto', textAlign: 'center' }}>
             <Pagination onChange={this.pageChange} current={this.state.pageNo} total={this.state.count} />
           </div>
         </div>

@@ -46,10 +46,14 @@ function login() {
         if (userList.length) {
           const user = userList[0]
           if (password === user.password) {
-            res.send({
-              data: user,
-              code: SUCCESS_CODE,
-              msg: '登录成功!'
+            db.query(`SELECT jobId from delivery WHERE userId=${user.id}`, (error, sqlRes) => {
+              if(error) throw error
+              user.deliveryList = JSON.parse(JSON.stringify(sqlRes)).map(v => v.jobId)
+              res.send({
+                data: user,
+                code: SUCCESS_CODE,
+                msg: '登录成功!'
+              })
             })
           } else {
             res.send({
@@ -84,8 +88,61 @@ function updateUserCompany() {
   })
 }
 
+function getAllUser() {
+  app.get('/getAllUser', (req, res) => {
+    const sql = `SELECT * from user WHERE type=1 OR type=0`
+    db.query(sql, (err, result) => {
+      const data = JSON.parse(JSON.stringify(result))
+      res.send({data})
+    })
+  })
+}
+
+function delUser() {
+  app.post('/delUser', (req, res) => {
+    let params = ''
+    req.on("data", (chunk) => {
+      params += chunk
+    })
+    req.on("end", () => {
+      const {id} = JSON.parse(params)
+      const sql = `DELETE FROM user WHERE id=${id}`
+      db.query(sql, err => {
+        if(err) throw err
+        res.send({
+          code: SUCCESS_CODE, msg: '删除成功!'
+        })
+      })
+    })
+  })
+}
+
+function editUser() {
+  app.post('/editUser', (req, res) => {
+    let params = ''
+    req.on("data", (chunk) => {
+      params += chunk
+    })
+    req.on("end", () => {
+      const { id, username, password, type } = JSON.parse(params)
+      const sql = `UPDATE user SET username=?, password=?, type=? WHERE id=?`
+      const arr = [`${username}`, `${password}`, `${type}`, id]
+      db.query(sql, arr,err => {
+        if(err) throw err
+        res.send({
+          code: SUCCESS_CODE, msg: '删除成功!'
+        })
+      })
+    })
+  })
+}
+
+
 module.exports = {
   registry,
   login,
-  updateUserCompany
+  updateUserCompany,
+  getAllUser,
+  delUser,
+  editUser
 }

@@ -1,5 +1,5 @@
 import Style from "@/views/companyDetail/companyDetail.module.scss";
-import {Avatar, Col, Row} from "antd";
+import {Avatar, Button, Col, Row} from "antd";
 import React from "react";
 
 export default function Info(props) {
@@ -11,7 +11,11 @@ export default function Info(props) {
             <div className={Style.pic}>
               <Avatar className={Style.img} size={100} shape="square" src={props.info.companyImg} />
               <div>
-                <div className={Style.name}>{props.info.companyName}</div>
+                <div className={Style.name}>
+                  <span>{props.info.companyName}</span>
+                  {props.btnShow ?
+                    <Button type="primary" style={{marginLeft: '20px'}} onClick={() => {props.addJob()}}>发布职位</Button> : ''}
+                </div>
                 <div className={Style.desc}>
                   {props.info.situation} ·
                   {props.info.peopleNum} ·

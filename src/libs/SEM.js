@@ -67,6 +67,14 @@ export const educationMap = {
   '7': '初中及以下'
 }
 
+export const educationEnum = {
+  '博士': '博士',
+  '硕士': '硕士',
+  '本科': '本科',
+  '大专': '大专',
+  '不限': '不限'
+}
+
 export const headerImg = 'https://img.bosszhipin.com/boss/avatar/avatar_6.png?x-oss-process=image/resize,w_100,limit_0'
 
 export const jobDesc = '工作职责<br />' +

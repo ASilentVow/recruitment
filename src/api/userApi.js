@@ -14,3 +14,10 @@ export function updateUserCompany(params) {
   const url = '/updateCompany'
   return Http.post(url, params)
 }
+
+export function getAllUser(params) {
+  const url = '/getAllUser'
+  return Http.get(url, {
+    params: params
+  })
+}
